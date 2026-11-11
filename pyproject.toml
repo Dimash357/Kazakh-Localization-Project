@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "locqa"
+version = "0.1.2"
+description = "Localization QA for Flutter ARB files (Kazakh / Uzbek)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+llm = ["google-genai"]
+
+[project.scripts]
+locqa = "locqa.cli:main"
+
+[tool.setuptools]
+packages = ["locqa"]

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>locqa: intl_kk_fixed.arb</title>
+  <style>:root {
+  --bg: #121212;
+  --panel: #1c1c22;
+  --panel-2: #24242c;
+  --line: #34343e;
+  --text: #e8e8ee;
+  --muted: #9a9aa8;
+  --high: #ff2e4d;
+  --medium: #ffb020;
+  --low: #2fd6a3;
+  --action: #3d9bff;
+  --mono: "JetBrains Mono", "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--sans); }
+.mono { font-family: var(--mono); }
+.muted { color: var(--muted); }
+h1 { margin: 0; font-size: 20px; font-weight: 600; }
+h1 .muted { font-weight: 400; }
+
+.topbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 24px; background: rgba(18,18,18,.92); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.topbar-actions { display: flex; align-items: center; gap: 14px; }
+main { max-width: 1280px; margin: 0 auto; padding: 24px; }
+
+.btn { font: 600 13px var(--sans); color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 8px 14px; cursor: pointer; }
+.btn:hover { border-color: var(--action); }
+.btn-primary { background: var(--action); border-color: var(--action); color: #04121f; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-ok { color: var(--low); border-color: #1f6e58; }
+.btn-warn { color: var(--medium); border-color: #7a5710; }
+:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; }
+
+.kpis { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 12px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--muted); border-radius: 4px; padding: 16px 18px; }
+.kpi-val { font-size: 44px; line-height: 1; font-weight: 700; }
+.kpi-label { margin-top: 8px; color: var(--muted); font-size: 13px; }
+.kpi-total { border-top-color: var(--action); }
+.kpi-high { border-top-color: var(--high); } .kpi-high .kpi-val { color: var(--high); }
+.kpi-medium { border-top-color: var(--medium); } .kpi-medium .kpi-val { color: var(--medium); }
+.kpi-low { border-top-color: var(--low); } .kpi-low .kpi-val { color: var(--low); }
+
+.dist { margin: 16px 0 24px; }
+.dist-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dist-bar {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--panel-2);
+}
+
+.dist-bar span {
+  display: block;
+  height: 100%;
+}
+
+.dist-pie {
+  width: 80px;
+  height: 80px;
+  flex: 0 0 80px;
+  border-radius: 50%;
+  background: var(--panel-2);
+}
+.dist-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.bg-high { background: var(--high); } .bg-medium { background: var(--medium); } .bg-low { background: var(--low); }
+
+.filters { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 16px; margin-bottom: 20px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip { font: 12px var(--mono); color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.chip b { color: var(--text); margin-left: 6px; }
+.chip:hover { border-color: var(--action); color: var(--text); }
+.chip[aria-pressed="true"] { background: rgba(61,155,255,.15); border-color: var(--action); color: var(--action); }
+.filter-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.filter-row input[type="search"] { flex: 1 1 240px; }
+input[type="search"], select, textarea { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; font: 14px var(--sans); }
+input[type="search"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--action); }
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.check { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; cursor: pointer; }
+.check input { accent-color: var(--action); width: 16px; height: 16px; }
+#resultCount { margin-top: 12px; font-size: 12px; }
+
+.cards { display: grid; gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 4px; padding: 16px 18px; }
+.card.sev-high { border-left-color: var(--high); }
+.card.sev-medium { border-left-color: var(--medium); }
+.card.sev-low { border-left-color: var(--low); }
+.card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+.key { font: 600 14px var(--mono); color: var(--action); word-break: break-all; }
+.badge { font: 700 11px var(--mono); padding: 2px 8px; border-radius: 3px; text-transform: uppercase; color: #101010; }
+.badge.high { background: var(--high); box-shadow: 0 0 10px rgba(255,46,77,.45); }
+.badge.medium { background: var(--medium); box-shadow: 0 0 10px rgba(255,176,32,.4); }
+.badge.low { background: var(--low); }
+.tag { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 1px 8px; }
+.conf { margin-left: auto; font: 12px var(--mono); color: var(--muted); }
+.verdict { font: 700 11px var(--mono); padding: 2px 8px; border-radius: 3px; border: 1px solid; }
+.verdict.accepted, .verdict.edited { color: var(--low); border-color: var(--low); }
+.verdict.false_positive { color: var(--muted); border-color: var(--muted); }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cell { background: var(--panel-2); border-radius: 4px; padding: 10px 12px; min-width: 0; }
+.cell h3 { margin: 0 0 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.cell p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cell.src p, .cell.tgt p { font-family: var(--mono); font-size: 14px; }
+.cell.sug { border: 1px dashed #2a5a8a; }
+
+.review { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.review[hidden] { display: none; }
+.review textarea { width: 100%; min-height: 72px; resize: vertical; font-family: var(--mono); font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.card.false_positive { opacity: .6; }
+.status { text-align: center; color: var(--muted); padding: 40px 0; }
+
+@media (max-width: 860px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .kpi-total { grid-column: 1 / -1; }
+  .grid { grid-template-columns: 1fr; }
+  main { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.field input { background: var(--bg); color: var(--text); border: 1px solid var(--line); padding: 8px 10px; border-radius: 4px; max-width: 100%; }
+@media (max-width: 480px) { .topbar { padding: 12px; } .topbar-actions { flex-wrap: wrap; } .filter-row input[type="search"] { min-width: 0; width: 100%; } .dist-legend { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <h1>LocQA <span class="muted">/ отчёт по локализации</span></h1>
+    <div class="topbar-actions">
+      <span id="saveState" class="muted mono" aria-live="polite"></span>
+      <button id="importBtn" class="btn" type="button" disabled>Загрузить решения</button>
+      <input id="importFile" type="file" accept=".json,application/json" hidden>
+      <button id="exportBtn" disabled class="btn btn-primary" type="button">Скачать decisions.json</button>
+    </div>
+  </header>
+
+  <main>
+    <p id="llm-status" class="status" hidden></p>
+    <section class="kpis" aria-label="Статистика">
+      <div class="kpi kpi-total"><div class="kpi-val mono" id="kpiTotal">0</div><div class="kpi-label">Всего проблем</div></div>
+      <div class="kpi kpi-high"><div class="kpi-val mono" id="kpiHigh">0</div><div class="kpi-label">High</div></div>
+      <div class="kpi kpi-medium"><div class="kpi-val mono" id="kpiMedium">0</div><div class="kpi-label">Medium</div></div>
+      <div class="kpi kpi-low"><div class="kpi-val mono" id="kpiLow">0</div><div class="kpi-label">Low</div></div>
+      <div class="kpi kpi-done"><div class="kpi-val mono" id="kpiReviewed">0</div><div class="kpi-label">Проверено</div></div>
+    </section>
+
+    <section class="dist" aria-label="Распределение критичности">
+      <div class="dist-row">
+        <div class="dist-bar" id="distBar"
+         role="img" aria-label="Распределение критичности"></div>
+        <div class="dist-pie" id="distPie" aria-hidden="true"></div>
+        </div>
+      <div class="dist-legend mono" id="distLegend"></div>
+    </section>
+
+    <section class="filters" aria-label="Фильтры">
+      <div class="chips" id="typeChips" role="group" aria-label="Тип проблемы"></div>
+      <div class="filter-row">
+        <input type="search" id="search" placeholder="Поиск по key, тексту, причине…" aria-label="Поиск">
+        <label class="field">Критичность
+          <select id="severityFilter">
+            <option value="">Все</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+        <label class="field">Уверенность
+          <select id="confidenceFilter"><option value="">Любая</option></select>
+        </label>
+        <label class="field">Проверяющий<input id="reviewer" type="text" placeholder="Имя (необязательно)"></label>
+        <label class="check"><input type="checkbox" id="reviewMode"> Режим проверки носителем</label>
+        <button id="resetFilters" class="btn" type="button">Сбросить фильтры</button>
+      </div>
+      <div class="muted mono" id="resultCount" aria-live="polite"></div>
+    </section>
+
+    <section id="cards" class="cards" aria-label="Список проблем"></section>
+    <p id="status" class="status" role="status"></p>
+  </main>
+
+  <script id="report-data" type="application/json">{"summary": {"tool": "locqa 0.1.2", "source": "intl_ru.arb", "target": "intl_kk_fixed.arb", "target_lang": "kk", "keys_checked": 5478, "glossary_terms": 7, "min_confidence": 0.5, "low_confidence_candidates": 368, "generated_at": "2026-10-31T17:44:13+00:00", "total": 139, "keys_with_findings": 139, "by_type": {"inconsistent_term": 33, "length_overflow": 62, "machine_translation_suspect": 17, "glossary_violation": 1, "same_as_source": 20, "untranslated": 4, "suffix_harmony": 2}, "by_severity": {"medium": 106, "high": 33}}, "labels": {"untranslated": "Нет перевода", "same_as_source": "Совпадает с русским", "placeholder_mismatch": "Плейсхолдеры", "plural_mismatch": "ICU plural", "glossary_violation": "Глоссарий", "length_overflow": "Длина", "machine_translation_suspect": "Машинный перевод?", "inconsistent_term": "Несогласованные термины", "suffix_harmony": "Окончание после плейсхолдера", "orthography": "Орфография", "wrong_language": "Чужой язык"}, "types": ["untranslated", "same_as_source", "placeholder_mismatch", "plural_mismatch", "glossary_violation", "length_overflow", "machine_translation_suspect", "inconsistent_term", "suffix_harmony", "orthography", "wrong_language"], "findings": [{"key": "cancel", "issue_type": "inconsistent_term", "severity": "medium", "source": "Отмена", "target": "Болдырмау", "evidence": "«Отмена» в 5 из 8 ключей переведено как «БАСТАУ», здесь — «Болдырмау». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "a3ab934c5e66d0993e54008abb213cca9dab9ebb58a68aa15303abc8661dc88f"}, {"key": "selectRegionConfirmTitleV2", "issue_type": "length_overflow", "severity": "medium", "source": "изменить регион?", "target": "аймақты өзгерту керек пе?", "evidence": "25 символов против 16 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.68, "reviewed_by_human": false, "id": "9a31cae690c241d229d38eb64b1900df9e97353e9e85689c5b89977ef28e091e"}, {"key": "selectRegionConfirmAttentionLabel", "issue_type": "length_overflow", "severity": "medium", "source": "ВНИМАНИЕ!", "target": "НАЗАР АУДАРЫҢЫЗ!", "evidence": "16 символов против 9 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.76, "reviewed_by_human": false, "id": "402707715a86ae29cc04422ad3d67ba34ac24c63355d9b2b53323f5269b17156"}, {"key": "launcherGenerateNameRulesTitlePart2", "issue_type": "length_overflow", "severity": "medium", "source": "Правилами Сервера", "target": "Сервер ережелерімен келісесіз", "evidence": "29 символов против 17 в исходнике (×1.7; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.73, "reviewed_by_human": false, "id": "d974369360aad284d859b56901e485f4378e220b0d69915b7bb5cfcd4d963de3"}, {"key": "notificationPermissionDialogDescription", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Разрешите уведомления, чтобы получать\nинформацию о новинках в игре,\nперсональные скидки\nи важные обновления.", "target": "Хабарландыруларға рұқсат беріп,\nойындағы жаңалықтар,\nжеке жеңілдіктер\nжәне маңызды жаңартулар\nтуралы біліп отырыңыз.", "evidence": "послелог «туралы» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "efbb75fc95ae097929d7cd62ed1c38b86bc599022bb3a5904ce400b5359537cb"}, {"key": "bones_select", "issue_type": "length_overflow", "severity": "medium", "source": "ВЫБРАТЬ", "target": "Аймақты таңдаңыз", "evidence": "16 символов против 7 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "Таңдау", "confidence": 0.55, "reviewed_by_human": false, "id": "1b8687eeca27b6e297e17153936e09bfe49c7ba43ff20d5bd73f64b871c081d3"}, {"key": "battlepass_balance", "issue_type": "length_overflow", "severity": "medium", "source": "БАЛАНС", "target": "қолма-қол ақша", "evidence": "14 символов против 6 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "Баланс", "confidence": 0.55, "reviewed_by_human": false, "id": "48870d0a80706cecdfb5882f55fb2c574caae3c77d5ab0b7863e80bfe797806d"}, {"key": "battlepass_congratulate", "issue_type": "inconsistent_term", "severity": "medium", "source": "ПОЗДРАВЛЯЕМ!", "target": "Сүйінші!", "evidence": "«ПОЗДРАВЛЯЕМ!» в 4 из 6 ключей переведено как «ҚҰТТЫҚТАЙМЫЗ!», здесь — «Сүйінші!». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "8b51384df86d201bef3c8e9dd4bb9a6eb1aaad1df315e2a3c467864139e09a06"}, {"key": "laUnpackingHighResTexturesTruck", "issue_type": "glossary_violation", "severity": "medium", "source": "Разгружаем фуру с текстурами высокого разрешения", "target": "Жоғары шешімді текстураларды түсіру", "evidence": "В исходнике термин «фура», в переводе нет «фура / жүк көлігі». Грузовик дальнобойщика. Сленг игроков; «жүк көлігі» — допустимо в длинных описаниях.", "suggestion": null, "confidence": 0.6, "reviewed_by_human": false, "id": "8d0a15af7c00fb365822bdfbbb3f01c7a8181eb81204976c85818ba5f1b60123"}, {"key": "laUnknownNetworkError", "issue_type": "same_as_source", "severity": "high", "source": "Неизвестная ошибка", "target": "Неизвестная ошибка", "evidence": "Строка из 2 слов идентична русской; русские признаки: Неизвестная", "suggestion": "Белгісіз қате", "confidence": 0.95, "reviewed_by_human": false, "id": "1161fa9c5e52f6fe9686ea6ccfd4dc9cf1067a0642ced5f8fd3232908ecd0de0"}, {"key": "complaint_tab_all", "issue_type": "length_overflow", "severity": "medium", "source": "Все жалобы", "target": "барлық шағымдар", "evidence": "15 символов против 10 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "699038ee70cff3cf06c32fdca6cae363bbe91d56ba6b7c626a12a1fb5e3d60bb"}, {"key": "farm_desc", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Вам предстоит сажать растения в отведенные места,\nпосле, через определенное количество времени собирать\nурожай, получая прибыль.\n\nМы ожидаем тебя на работе!", "target": "Сіз өсімдіктерді белгіленген орындарға отырғызасыз,\nкейін белгілі бір уақыттан кейін\nөнімді жинап, пайда табасыз.\nСізді жұмыста күтеміз!", "evidence": "послелог «кейін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "86ed1cd70c3bc7aa09bbf2e9d6a6571937b779afcb8879540a540928ac336f24"}, {"key": "fac_lose_title", "issue_type": "length_overflow", "severity": "medium", "source": "вы проиграли!", "target": "сіз жеңіліп қалдыңыз!", "evidence": "21 символов против 13 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": "Сіз жеңілдіңіз", "confidence": 0.7, "reviewed_by_human": false, "id": "a7ce792c9791b7b33184341f52909065bf4ab8699aee1d8c8186844d9f78fa29"}, {"key": "choose", "issue_type": "length_overflow", "severity": "medium", "source": "Выбрать", "target": "Аймақты таңдаңыз", "evidence": "16 символов против 7 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "Таңдау", "confidence": 0.55, "reviewed_by_human": false, "id": "48e4f8ce8e7b63847f870bd24f314146d9d96ae2e46b578f96ce4c7ebd99a71c"}, {"key": "accessories_type_other", "issue_type": "length_overflow", "severity": "medium", "source": "РАЗНОЕ", "target": "Басқа режимін қосу және жалғастыру", "evidence": "34 символов против 6 в исходнике (×5.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "b3512fb21f8450e4ffe6512d000ed8ca59eb0cdaecb2d4e797df086f4eb1a8b9"}, {"key": "sct_confirmation_title", "issue_type": "length_overflow", "severity": "medium", "source": "ВЫ ПОКУПАЕТЕ НОМЕР", "target": "СІЗ НӨМІРДІ САТЫП АЛЫП ЖАТЫРСЫЗ", "evidence": "31 символов против 18 в исходнике (×1.7; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.74, "reviewed_by_human": false, "id": "a1f1aba9b162394313bf485de6fa52bed300687fe96b16bb989c3f699b70a884"}, {"key": "mail_remove_title", "issue_type": "length_overflow", "severity": "medium", "source": "удалить навсегда?", "target": "мәңгілікке өшіру керек пе?", "evidence": "26 символов против 17 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.66, "reviewed_by_human": false, "id": "be01417765bff901e04c43fefe933f51ad5ef180729e444a04383e323cc047ff"}, {"key": "tune_confirmation_title", "issue_type": "inconsistent_term", "severity": "medium", "source": "Вы действительно хотите приобрести?", "target": "Шын сатып алғыңыз келе ме?", "evidence": "«Вы действительно хотите приобрести?» в 4 из 7 ключей переведено как «Сіз шынымен сатып алғыңыз келе ме», здесь — «Шын сатып алғыңыз келе ме?». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "429d095904b052a2712779d1d79792033fe2fcad5101f47cf553dfb3d1740be9"}, {"key": "tune_detail_chip_tuning", "issue_type": "same_as_source", "severity": "high", "source": "ЧИП-ТЮНИНГ", "target": "ЧИП-ТЮНИНГ", "evidence": "Строка из 2 слов идентична русской", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "d62f4140cf0022a30b05a4e815dc199f4d85d65029c3193bc1aa03eceb1ea08b"}, {"key": "tune_buy_headlights_color", "issue_type": "inconsistent_term", "severity": "medium", "source": "Цвет фар", "target": "Бағдаршамның түсі", "evidence": "«Цвет фар» в 3 из 4 ключей переведено как «ФАР ТҮСІ», здесь — «Бағдаршамның түсі». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "7f09b8b119fb7faf5cb10b270c48518ef5f64a88bc6ef57c7da8150494e0db53"}, {"key": "tune_buy_neon", "issue_type": "length_overflow", "severity": "medium", "source": "Цвет неона", "target": "Неон түсі туралы толық ақпарат алу үшін", "evidence": "39 символов против 10 в исходнике (×3.9; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "42ae6f353c23087687c3902d1ccfc96095d5e97f6be2522d86264f7089ce7ada"}, {"key": "tune_buy_back_offset", "issue_type": "length_overflow", "severity": "medium", "source": "Вылет задних колес - +", "target": "Артқы доңғалақтардың қашықтығы - +", "evidence": "34 символов против 22 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.67, "reviewed_by_human": false, "id": "1bcd3b9f70c941f9b416bc833cec1c420ea8e69abfee57dab4376962e5a194b8"}, {"key": "pirate_task_will_available", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Задание будет доступно через", "target": "тапсырма\nкейін қолжетімді болады", "evidence": "послелог «кейін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "03bd7e9e07f9df5673e582ceb7b4810d64fe98ff38485ba12d158699f499234c"}, {"key": "drag_race_master_league", "issue_type": "same_as_source", "severity": "high", "source": "Мастер-лига", "target": "Мастер-лига", "evidence": "Строка из 2 слов идентична русской", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "d4a69d115d64e4b6af63638300b1d6d7f5b6fb34b41e9310b05dc751d7c61602"}, {"key": "drag_next_races_after", "issue_type": "length_overflow", "severity": "medium", "source": "+5 гонок через", "target": "+5 мин кейін келесі жарыс", "evidence": "25 символов против 14 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.76, "reviewed_by_human": false, "id": "c38bddfebda8712d555e0fa4d9fbe4b37f11ad7ee5d98b5ea02baf5e0ee4cfaf"}, {"key": "play", "issue_type": "inconsistent_term", "severity": "medium", "source": "Играть", "target": "Ойнау", "evidence": "«Играть» в 3 из 5 ключей переведено как «ОЙЫН», здесь — «Ойнау». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "026e75e14221d6864a6ff9722ba76f045a64254d4759c3d834b42178e0329936"}, {"key": "tablet_app_balance", "issue_type": "length_overflow", "severity": "medium", "source": "Баланс", "target": "қолма-қол ақша", "evidence": "14 символов против 6 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "Баланс", "confidence": 0.55, "reviewed_by_human": false, "id": "b196cee82a6fe6eb533617bee03e837a80b3a4013045df8eac8fc2bb5326b3bd"}, {"key": "tablet_app_punch", "issue_type": "length_overflow", "severity": "medium", "source": "PUNCH", "target": "ЧЕМПИОН СЛОТТАРЫ", "evidence": "16 символов против 5 в исходнике (×3.2; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "3a1e665e5e17781bbb60298ffd1f54fa9abe4d11eed96500ef2ebeb0732ebdee"}, {"key": "bank_to_edit_info", "issue_type": "inconsistent_term", "severity": "medium", "source": "СУММА ПОПОЛНЕНИЯ", "target": "ТОЛТЫРУ СОМАСЫ", "evidence": "«СУММА ПОПОЛНЕНИЯ» в 3 из 4 ключей переведено как «ТОЛЫҚТЫРУ СОМАСЫ», здесь — «ТОЛТЫРУ СОМАСЫ». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "b113964834fd1fc9b54db2458061a457a6d62b97c3a331e7f19ae3e09c466b3a"}, {"key": "gts_title", "issue_type": "length_overflow", "severity": "medium", "source": "Мусорщик", "target": "Қоқыс жинаушы", "evidence": "13 символов против 8 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.7, "reviewed_by_human": false, "id": "993838e63396aa9ef8825f031daba650fc704d691e5de42e173dca4d5dd5e461"}, {"key": "fuel_current", "issue_type": "length_overflow", "severity": "medium", "source": "В баке:", "target": "Ағымдағы деңгей:", "evidence": "16 символов против 7 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "11a8f90a6821ce6b7f2157645a02f9771833bbae815570821a288939bbc534d1"}, {"key": "arena_inventory_title", "issue_type": "length_overflow", "severity": "medium", "source": "ваши Призы", "target": "Сіздің Жүлделеріңіз", "evidence": "19 символов против 10 в исходнике (×1.9; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.81, "reviewed_by_human": false, "id": "5ea688cc13d7847dc1ab3a947114d21969c015d20d8f501add186a38ec653bda"}, {"key": "arena_halloween_title", "issue_type": "length_overflow", "severity": "medium", "source": "Тыквобойня", "target": "Асқабақтар шайқасы", "evidence": "18 символов против 10 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.77, "reviewed_by_human": false, "id": "31a1e29f3e2f034aa5ec720060d079f7de12b64e22655d24ef07b7261d0579d5"}, {"key": "family_management_locked", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Доступно с ранга Смотрящий", "target": "Смотрящий рангынан бастап қолжетімді", "evidence": "слова с русскими окончаниями: Смотрящий", "suggestion": null, "confidence": 0.6, "reviewed_by_human": false, "id": "c9b43c4f5ab0526067a65d6365b3c52be4f3ce3110a920800c16862cb0f618a5"}, {"key": "rarely", "issue_type": "length_overflow", "severity": "medium", "source": "Редкий", "target": "сирек кездесетін", "evidence": "16 символов против 6 в исходнике (×2.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "СИРЕК", "confidence": 0.55, "reviewed_by_human": false, "id": "e04147b61d0050e1a1081f95d94cd4affa28e6870130a728015e847b0504742b"}, {"key": "rm_title_10", "issue_type": "length_overflow", "severity": "high", "source": "Имущество", "target": "Таңдамалыларды баптау", "evidence": "21 символов против 9 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "acef6749146e853b815bbb301a66407570516b99f54ff6ff78b8273ebd9d776a"}, {"key": "rm_title_22", "issue_type": "length_overflow", "severity": "high", "source": "Уволить", "target": "Жұмыстан шығару", "evidence": "15 символов против 7 в исходнике (×2.1; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.91, "reviewed_by_human": false, "id": "9950b69601c22054d312d5082dad0b64c5e12a9441ac8024f8d49acf6b3a8c02"}, {"key": "rm_title_26", "issue_type": "length_overflow", "severity": "medium", "source": "Снять выговор", "target": "Айыптауды алып тастау", "evidence": "21 символов против 13 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.7, "reviewed_by_human": false, "id": "09c89768f3bc45ce69fea74d7dafec6c8bb0655b63e4a448548acf1811cd42e2"}, {"key": "rm_title_46", "issue_type": "length_overflow", "severity": "medium", "source": "Показать медкарту", "target": "Медициналық картаны көрсету", "evidence": "27 символов против 17 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.69, "reviewed_by_human": false, "id": "af1d1151a5db5f5297f59049bc55235c83c665c3224f2913ba9a5d1636e100d5"}, {"key": "rm_title_67", "issue_type": "length_overflow", "severity": "medium", "source": "Снять розыск", "target": "Іздеуді алып тастау", "evidence": "19 символов против 12 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.68, "reviewed_by_human": false, "id": "0c58342b085ab8e747017f76a410c6ae770f01bfd9cd0036cf555de019941e28"}, {"key": "rm_title_72", "issue_type": "length_overflow", "severity": "high", "source": "Обмен", "target": "Айырбастау", "evidence": "10 символов против 5 в исходнике (×2.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": "Айырбас", "confidence": 0.85, "reviewed_by_human": false, "id": "7ae576e156564748f0cfa24aa026f953470ac51161d89c402e06e36773dd573d"}, {"key": "favorite", "issue_type": "length_overflow", "severity": "medium", "source": "Избранные", "target": "Қолжетерлік іс-әрекеттер", "evidence": "24 символов против 9 в исходнике (×2.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "6ea3ae3b8ed7749a5dd99d7743e832399459408b96eda9901f2d21805c1fe83b"}, {"key": "chaseYou", "issue_type": "length_overflow", "severity": "medium", "source": "ЗА ВАМИ", "target": "сіздің артыңызда", "evidence": "16 символов против 7 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "d75ded770265135111d864f175fafae3b0d7c7768ffd9830c726825ef9ba7eae"}, {"key": "marriage", "issue_type": "length_overflow", "severity": "medium", "source": "Брак", "target": "Заңға бағынушылық", "evidence": "17 символов против 4 в исходнике (×4.2; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "32b0dfa94632b37f8a342f8c48135e5e0be5795baf7fd47d94fe960ea2a895e9"}, {"key": "jungleTreasuresTimeMinutesSeconds", "issue_type": "same_as_source", "severity": "high", "source": "{minutes} мин. {seconds} сек.", "target": "{minutes} мин. {seconds} сек.", "evidence": "Строка из 2 слов идентична русской", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "1cb286fef49977f746e3048ddc25b15ba35c31e6ec0aeebbaf2d6e40786d0d0c"}, {"key": "jungleTreasuresRecieveImmediately", "issue_type": "same_as_source", "severity": "high", "source": "и получить предмет сразу", "target": "и получить предмет сразу", "evidence": "Строка из 4 слов идентична русской; русские признаки: и, получить", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "30c5bc5f293886a5d041d8e9f8a0c34dcb291ce8abbb6cce827c3c119b417bf6"}, {"key": "expeditionTasksCollectReward", "issue_type": "inconsistent_term", "severity": "medium", "source": "Забрать награду", "target": "жүлдені алу", "evidence": "«Забрать награду» в 4 из 8 ключей переведено как «Сыйлықты алу», здесь — «жүлдені алу». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "334ced441344b73199e5719d50242b0d1996ddf4340a060bec249242cef99b93"}, {"key": "bankTransferDescription", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Для перевода игроку сначала введите его никнейм, затем\nвведите сумму и нажмите кнопку «Перевести»", "target": "Ойыншыға аудару үшін алдымен оның никін,\nкейін соманы енгізіп, «Аудару» батырмасын басыңыз", "evidence": "послелог «кейін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "3a71c409711980b423e9fb99d67271f91be683a34856dbdd764dd8cc0a0e5608"}, {"key": "summerRushWillBeAvailableIn", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "будет доступно через", "target": "АРҚЫЛЫ ҚОЛЖЕТІМДІ БОЛАДЫ", "evidence": "послелог «АРҚЫЛЫ» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "303f015ebb3ae5dac7d4012d02bfa66b62ed6fef9987bd9b11225253b02154ac"}, {"key": "summerRushAfkKickCountdown", "issue_type": "same_as_source", "severity": "high", "source": "До исключения за АФК", "target": "До исключения за АФК", "evidence": "Строка из 4 слов идентична русской; русские признаки: исключения, за", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "08cfa12322572d21746ba092a60c96f79152fbb2c63c8f4e54126d4dda178670"}, {"key": "summerRushCongratsTitle", "issue_type": "inconsistent_term", "severity": "medium", "source": "Поздравляем!", "target": "Сүйінші!", "evidence": "«Поздравляем!» в 4 из 6 ключей переведено как «ҚҰТТЫҚТАЙМЫЗ!», здесь — «Сүйінші!». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "ffab025c82ba9291982b3dfe029f4a68c17f377b905d2e3b0237c677c33102b1"}, {"key": "summerRushRewardsClaimRewardButton", "issue_type": "inconsistent_term", "severity": "medium", "source": "Забрать награду", "target": "жүлдені алу", "evidence": "«Забрать награду» в 4 из 8 ключей переведено как «Сыйлықты алу», здесь — «жүлдені алу». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "8fb6300dcb2d9ec4e0043b410165621643efe32d77556a9884d8ac4eab8cf206"}, {"key": "edu_title_inv_item", "issue_type": "length_overflow", "severity": "medium", "source": "Еда и предметы", "target": "Азық-түлік және заттар", "evidence": "22 символов против 14 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.68, "reviewed_by_human": false, "id": "c84d3963adf0364af4f43fb76245a25413d8e3b095ab9c07e96f4c0a1af4b6c5"}, {"key": "edu_desc_hud_control_enter_vehicle", "issue_type": "same_as_source", "severity": "high", "source": "Отлично, у тебя получилось открыть авто. Теперь сядь в него, нажав кнопку в правой части экрана.", "target": "Отлично, у тебя получилось открыть авто. Теперь сядь в него, нажав кнопку в правой части экрана.", "evidence": "Строка из 16 слов идентична русской; русские признаки: у, открыть, в, в", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "86630eac1965aa11cf360bb84f43041bbe23f9ed1af85c584cfccdbd9eb55f92"}, {"key": "edu_desc_hud_task_button", "issue_type": "length_overflow", "severity": "medium", "source": "Загляни в список заданий", "target": "Тапсырмалар тізіміне көз жүгіртіп шық.", "evidence": "38 символов против 24 в исходнике (×1.6; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.68, "reviewed_by_human": false, "id": "b9f2b392b14c49227b9a566da35225997d7b5e54ec81fa153b5a3f41e3ed6436"}, {"key": "piggyGetBy", "issue_type": "length_overflow", "severity": "medium", "source": "Снять за", "target": "Мына сомаға шешіп алу:", "evidence": "22 символов против 8 в исходнике (×2.8; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "6fbcc5ad82702fc742b35e1d1583400cd2d9aac51792c9f8c04a5e553422009a"}, {"key": "launcherSettingsDeleteAccountConfirmTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Внимание", "target": "Назар аударыңыз", "evidence": "15 символов против 8 в исходнике (×1.9; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.8, "reviewed_by_human": false, "id": "37f8c81173ec3d75207f9b011ff726c54c4eb5262f6db1b31e41eef1dec18dbf"}, {"key": "prizeFestivalOpenFor", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Разблокировать за", "target": "үшін ашу", "evidence": "послелог «үшін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "3b237ecf8c10fe64bac483145ffafda2ee125f5cb7a45c8cd5c032b0511a59a8"}, {"key": "halloweenEnergyBank", "issue_type": "same_as_source", "severity": "high", "source": "КОПИЛКА\nЭНЕРГИИ", "target": "КОПИЛКА\nЭНЕРГИИ", "evidence": "Строка из 2 слов идентична русской", "suggestion": "Энергия\nжинақ жәшігі", "confidence": 0.85, "reviewed_by_human": false, "id": "6e0933ae8efd0551349dd6f122952a6dac41af7a9213861e2447a349d57d0a32"}, {"key": "birthday_camp_one_combo_rare", "issue_type": "length_overflow", "severity": "medium", "source": "Редкий", "target": "сирек кездесетін", "evidence": "16 символов против 6 в исходнике (×2.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "СИРЕК", "confidence": 0.55, "reviewed_by_human": false, "id": "09d5cde52a9d38f7b9732bb42382ea9d331478b872d91908afcae2f1b52f0790"}, {"key": "birthday_collect_reward", "issue_type": "inconsistent_term", "severity": "medium", "source": "Забрать Награду", "target": "жүлдені алу", "evidence": "«Забрать Награду» в 4 из 8 ключей переведено как «Сыйлықты алу», здесь — «жүлдені алу». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "c25c236b194784602ae2f5808781258635e000d7187928bc3d29a7d258ccf68e"}, {"key": "birthday_info_more_play", "issue_type": "same_as_source", "severity": "high", "source": "Чем больше играешь - тем выше Ты и Твоя Команда!", "target": "Чем больше играешь - тем выше Ты и Твоя Команда!", "evidence": "Строка из 9 слов идентична русской; русские признаки: играешь, и", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "d7da6b59137e1f48dd3687952c905ba0104220368f887fce57c6e9643c2870d7"}, {"key": "newYearCancel", "issue_type": "inconsistent_term", "severity": "medium", "source": "ОТМЕНА", "target": "БАС ТАРТУ", "evidence": "«ОТМЕНА» в 5 из 8 ключей переведено как «БАСТАУ», здесь — «БАС ТАРТУ». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "3b8ff29f81328204035bcaf1a3383b4063c7ccd733e7a01d8839282c46d8e855"}, {"key": "newYearPassRewards", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награды", "target": "Сыйлықтар", "evidence": "«Награды» в 6 из 10 ключей переведено как «жүлделер», здесь — «Сыйлықтар». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "edbc4d065c6f09c7c59714a67e9430fd6fd2df87caeaabb95653d9647a1375c1"}, {"key": "newYearItemCommon", "issue_type": "inconsistent_term", "severity": "medium", "source": "ОБЫЧНЫЙ", "target": "ҚАРАПАЙЫМ", "evidence": "«ОБЫЧНЫЙ» в 3 из 5 ключей переведено как «қалыпты», здесь — «ҚАРАПАЙЫМ». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "68e4712aa0ca084e88d165bb6e22b1d83b3267ba84227e8fdc4891fba36f8cdd"}, {"key": "newYearPlay", "issue_type": "inconsistent_term", "severity": "medium", "source": "ИГРАТЬ", "target": "ОЙНАУ", "evidence": "«ИГРАТЬ» в 3 из 5 ключей переведено как «ОЙЫН», здесь — «ОЙНАУ». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "dfc027555bec80a83e13019c0b331c3dba451a0d18d4d4491e115ca88f9529cd"}, {"key": "newYearToStore", "issue_type": "length_overflow", "severity": "medium", "source": "В МАГАЗИН", "target": "ДҮКЕНГЕ ӨТУ туралы толық ақпарат алу үшін", "evidence": "41 символов против 9 в исходнике (×4.6; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "дүкенге", "confidence": 0.55, "reviewed_by_human": false, "id": "ecea3de7c3865c03e325416774ac8b1f76adbd4eef37cc10d8dfef8eeaf7eb22"}, {"key": "newYearInfoDesc2", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "За задания можно получить опыт для Сезонного Пропуска и Леденцы.\n\nЕжедневные задания обновляются каждый день, а также их можно обновить через специальный бустер.\n\nТакже при приобретении Сезонного пропуска открывается доступ к специальным заданиям.", "target": "Тапсырмалар үшін Маусымдық рұқсат (Сезонный пропуск) тәжірибесін және Мұзкәмпиттер алуға болады.\n\nКүнделікті тапсырмалар күн сайын жаңарып отырады, сонымен қатар оларды арнайы бустер арқылы да жаңартуға болады.\n\nСондай-ақ, Маусымдық рұқсатты сатып алған кезде арнайы тапсырмаларға қолжетімділік ашылады.", "evidence": "слова с русскими окончаниями: Сезонный", "suggestion": null, "confidence": 0.6, "reviewed_by_human": false, "id": "202fbb8fe3e26a861b073a6946fb6b8270158ddb15316151c3ef6795deed4e0b"}, {"key": "shopNewConfirmEnd", "issue_type": "length_overflow", "severity": "high", "source": "кейс?", "target": "кейді сатып алғыңыз\nкелетініне сенімдісіз бе?", "evidence": "45 символов против 5 в исходнике (×9.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "47a4f3f63a76d7ef7f469239ecef5b59a2c79e2751fab8aff7b9b5edaff35e4b"}, {"key": "shopNewVehicleDesc", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Все автомобили являются коллекционными и продаже/обмену с другими игроками не подлежат", "target": "Барлық көліктер коллекциялық болып табылады және басқа ойыншыларға сатуға немесе айырбастауға болмайды", "evidence": "«болып табылады» — калька с «является»", "suggestion": null, "confidence": 0.6, "reviewed_by_human": false, "id": "9fd972ec407b1a27bf0cc43a460db5792ac1f79cf97add09a14c399eecf9d925"}, {"key": "lnySummaryReward", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "СУММАРНАЯ НАГРАДА\nЗА ВСЕ ЗАДАНИЯ", "target": "БАРЛЫҚ ТАПСЫРМАЛАР\nҮШІН ЖАЛПЫ СЫЙЛЫҚ", "evidence": "послелог «ҮШІН» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "2e0a1553580ffa00d78f0fc5460958805273ba17aeb97d4d87e4c495fa590d66"}, {"key": "lnyEducationTasksEventTitle", "issue_type": "length_overflow", "severity": "high", "source": "Ивентовые", "target": "Ивент тапсырмалары", "evidence": "18 символов против 9 в исходнике (×2.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": "ИВЕНТТІК", "confidence": 0.85, "reviewed_by_human": false, "id": "d44bcf1d0815d50b3b15b773ae14e8b4144ab2b98c20084677916963998bddc6"}, {"key": "lnyEducationTasksDailyTitle", "issue_type": "length_overflow", "severity": "high", "source": "Ежедневные", "target": "Күнделікті тапсырмалар", "evidence": "22 символов против 10 в исходнике (×2.2; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": "Күнделікті", "confidence": 0.93, "reviewed_by_human": false, "id": "ee0fd5ed45f6e1434e6b1c6e03084a5bfa5da25d7de660e9be2dd66e43fd953a"}, {"key": "lnyEducationCharacterName", "issue_type": "same_as_source", "severity": "high", "source": "Мин-Чжу", "target": "Мин-Чжу", "evidence": "Строка из 2 слов идентична русской", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "533b1ca034cdbc7ebd816492cbd2d565757a29a0518f715d013c47294ce51c9b"}, {"key": "blackListShopShowcaseAuto", "issue_type": "inconsistent_term", "severity": "medium", "source": "Автомобили", "target": "Көліктер", "evidence": "«Автомобили» в 3 из 5 ключей переведено как «Автомобильдер», здесь — «Көліктер». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "57c05974893d8bfff9c07ed05527a54e35e2e5b4350329fb35e1f18f30d3d77e"}, {"key": "blackListTutorialContractsDescription", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Выбирай последний контракт. Следующие\nслоты откроются после выполнения\nпредыдущих.", "target": "Соңғы контрактты таңда. Келесі\nұяшықтар алдыңғыларды орындағаннан\nкейін ашылады.", "evidence": "послелог «кейін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "6ada304a7790a52a7a05309a9b27325818d9e58b7391de3d86059ce97c26c940"}, {"key": "blackListTutorialFinalShopTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Где тратить?", "target": "Қайда жұмсауға болады?", "evidence": "22 символов против 12 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.78, "reviewed_by_human": false, "id": "fecdce84f9bcb83bc5466f07b2b6bca2f9cd4af0f0053f78dd40e918e66c2c3a"}, {"key": "bigCatchFishingReel", "issue_type": "same_as_source", "severity": "medium", "source": "Катушка", "target": "Катушка", "evidence": "Слово «Катушка» идентично русскому и не встречается в других строках перевода", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "c2621363b188ede9623aa569f2ae7c0beddf8a674a512cf80d0367be641aac6a"}, {"key": "bigCatchRewards", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награды", "target": "Сыйақылар", "evidence": "«Награды» в 6 из 10 ключей переведено как «жүлделер», здесь — «Сыйақылар». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "df7cfe38a2e1eed95c622f5e0ab9eb7e90e5547ba1c1bb3761c0b5efaf55b118"}, {"key": "bigCatchFishActivityInfoPrefix", "issue_type": "untranslated", "severity": "high", "source": "Показатель ", "target": "", "evidence": "Перевод пустой, исходник непустой", "suggestion": null, "confidence": 0.98, "reviewed_by_human": false, "id": "e59cf7009a79b1ee9acc29df5c6db4ba29a467ca5f662c9311cfddbb7c68473a"}, {"key": "bigCatchRaritySimple", "issue_type": "inconsistent_term", "severity": "medium", "source": "Обычный ", "target": "Қарапайым ", "evidence": "«Обычный » в 3 из 5 ключей переведено как «қалыпты», здесь — «Қарапайым ». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "2f28c2614d28308fd9bf873906ad9efbbee7e66d4f909bd316059fb9e2bca847"}, {"key": "bigCatchRewardReceived", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награда получена!", "target": "Марапат алынды!", "evidence": "«Награда получена!» в 4 из 6 ключей переведено как «Сыйлық алынды», здесь — «Марапат алынды!». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "7f24f2f588fe2c475732dfa90eba1d47e0e6be7dfad534c8f6a104ae45123765"}, {"key": "inventoryMailDelete", "issue_type": "inconsistent_term", "severity": "medium", "source": "Удалить", "target": "Жою", "evidence": "«Удалить» в 3 из 4 ключей переведено как «ӨШІРУ», здесь — «Жою». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "a7c049ca245aba074955fbc4d2f3b4a381e4680a7987291d84a64e1f618531a6"}, {"key": "inventoryMailSubsectionTop", "issue_type": "length_overflow", "severity": "medium", "source": "Верх", "target": "Үсті бөліміне өту үшін басыңыз", "evidence": "30 символов против 4 в исходнике (×7.5; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "f2adacd0ef6fbc300548b7349b64f5075d59ba6808096550dc6246970fe30af2"}, {"key": "tradePlatformRarityLegendary", "issue_type": "inconsistent_term", "severity": "medium", "source": "Легендарный", "target": "Легендалық", "evidence": "«Легендарный» в 3 из 6 ключей переведено как «аңыз», здесь — «Легендалық». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "98d7f85e8a172b7c3ff56d1d1beccb1f58e4988f42b8468c020482e18add20fb"}, {"key": "userMenuReportsAll", "issue_type": "length_overflow", "severity": "medium", "source": "ВСЕ ЖАЛОБЫ", "target": "БАРЛЫҚ ШАҒЫМДАР", "evidence": "15 символов против 10 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "c02fb5048c64f2f619a94e53de9b3d944c4fc8d0bda3dda7f92167b921a114e7"}, {"key": "userMenuReportsFromTo", "issue_type": "length_overflow", "severity": "medium", "source": "От {fromUser} на {toUser}", "target": "{fromUser} ойыншысынан {toUser} ойыншысына", "evidence": "42 символов против 25 в исходнике (×1.7; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.72, "reviewed_by_human": false, "id": "09a138b06947f919cd41965aea01614c15cb77714a436da43255e3ac7196c35d"}, {"key": "userMenuReportsAdminConclusionReviewed", "issue_type": "same_as_source", "severity": "high", "source": "Заключение: адм.{adminName} (Рассмотрено)", "target": "Заключение: адм.{adminName} (Рассмотрено)", "evidence": "Строка из 3 слов идентична русской; русские признаки: Заключение", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "3c4159f55098d66405f2de6092aa576f29ac8e17009ea765109db9950805dc1e"}, {"key": "userMenuArenaYourPrizesTab", "issue_type": "length_overflow", "severity": "high", "source": "Ваши призы", "target": "Сіздің сыйлықтарыңыз", "evidence": "20 символов против 10 в исходнике (×2.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "0164c4487874856f8abc11f1bfe935ed9954e76b115d0be5d07337adfa94baf2"}, {"key": "userMenuArenaCancel", "issue_type": "inconsistent_term", "severity": "medium", "source": "Отмена", "target": "Болдырмау", "evidence": "«Отмена» в 5 из 8 ключей переведено как «БАСТАУ», здесь — «Болдырмау». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "1da29bf8598320741e2dc4f3fc323aae82536ceceb85e8e6d06fb867417b7e86"}, {"key": "containersMainPrize", "issue_type": "inconsistent_term", "severity": "medium", "source": "Главный приз", "target": "Негізгі жүлде", "evidence": "«Главный приз» в 4 из 6 ключей переведено как «Бас жүлде», здесь — «Негізгі жүлде». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "1d0be6d0468d122dd1704eadb700b6c02ab374b72d825da26f86e85bd0c58cc6"}, {"key": "containersDatetime", "issue_type": "untranslated", "severity": "high", "source": "в", "target": "", "evidence": "Перевод пустой, исходник непустой", "suggestion": null, "confidence": 0.98, "reviewed_by_human": false, "id": "e5fc06c360f8fc381f3befa287d6855b7107947af51f43e95607676c0daba6a0"}, {"key": "dragRacingTypeStreet", "issue_type": "same_as_source", "severity": "high", "source": "Уличные Гонки", "target": "Уличные Гонки", "evidence": "Строка из 2 слов идентична русской", "suggestion": "Көше жарыстары", "confidence": 0.85, "reviewed_by_human": false, "id": "a55ca8b9b35e44063e5d102c0b28d181ff377bcbd16565b990e577b8bc2a1143"}, {"key": "dragRacingRewards", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награды", "target": "Сыйлықтар", "evidence": "«Награды» в 6 из 10 ключей переведено как «жүлделер», здесь — «Сыйлықтар». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "96a74f407a307bda19e35ab29847f2a12b54a24ee9b71c94e907e2ebddacd579"}, {"key": "dragRacingLevelUpgradeTitle1", "issue_type": "untranslated", "severity": "high", "source": "УРОВНЯ", "target": "", "evidence": "Перевод пустой, исходник непустой", "suggestion": null, "confidence": 0.98, "reviewed_by_human": false, "id": "3ad61251b312575877cccd13bd910166b0474400811b9e93e377402e99be8228"}, {"key": "dragRacingV2BuyDesc1", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Чертежи для {blueprintTitle}", "target": "{blueprintTitle} үшін сызбалар", "evidence": "послелог «үшін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "11f33a93df7e7b3084eb881ce4f957e6890091a8501c30b9f35559bb5e085531"}, {"key": "dragRacingV2BuyBSlotTitle", "issue_type": "length_overflow", "severity": "medium", "source": "ДОП СЛОТ ДЛЯ ЧЕРТЕЖЕЙ", "target": "СЫЗБАЛАРҒА АРНАЛҒАН ҚОСЫМША СЛОТ", "evidence": "32 символов против 21 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.66, "reviewed_by_human": false, "id": "ae15a497678d34e46a43a42781cb3b16286a2828279b19cc022fc733efd4546b"}, {"key": "userMenuAttention", "issue_type": "length_overflow", "severity": "medium", "source": "ВНИМАНИЕ!", "target": "НАЗАР АУДАРЫҢЫЗ!", "evidence": "16 символов против 9 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.76, "reviewed_by_human": false, "id": "3931dd94bc29e6d1d6a984ecca7679798cce47e2953ffcf0321f4475b08fe8e5"}, {"key": "questsV2RatingLimitTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Внимание", "target": "Назар аударыңыз", "evidence": "15 символов против 8 в исходнике (×1.9; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.8, "reviewed_by_human": false, "id": "f366143cbd87f1b655466d4a1e55fa2d12f5717168771213ef972c089bd2c4cc"}, {"key": "questsV2RatingAboutTabHowPlay", "issue_type": "length_overflow", "severity": "medium", "source": "Как играть", "target": "Қалай ойнау керек", "evidence": "17 символов против 10 в исходнике (×1.7; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.73, "reviewed_by_human": false, "id": "476fc08f19bbfc7dc4f964b3c4b95ad15b35572d64487ea8f9827901ae197873"}, {"key": "predictionsReward", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награда", "target": "Сыйлық", "evidence": "«Награда» в 3 из 5 ключей переведено как «жүлде», здесь — «Сыйлық». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "3e7fdf6a3b29415a95aa4469ce5b79ac00e32f751c49cc263e397e034d0522db"}, {"key": "predictionsBuyCoinsMaxError", "issue_type": "suffix_harmony", "severity": "high", "source": "Нельзя купить больше {max}", "target": "{max}-нан көп сатып алуға болмайды", "evidence": "«{max}-нан»: аффикс шығыс септік «-нан» жёстко прибит к плейсхолдеру; значение подставляется в игре, гармония гласных не гарантирована; нужна обработка в коде (выбор аффикса по последней букве значения) или ручная переформулировка", "suggestion": null, "confidence": 0.9, "reviewed_by_human": false, "id": "b078ded53c009865043da8f9528ddcca42720f2c4edd79738838fc98c1eeaf5b"}, {"key": "predictionsBetsTitle", "issue_type": "length_overflow", "severity": "high", "source": "Прием Ставок", "target": "Тігістер режимін қосу және жалғастыру", "evidence": "37 символов против 12 в исходнике (×3.1; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "a2f48b3057d95431c87a241bdc7ea440a6c6eb7e864795c89ddbfc4736409dc8"}, {"key": "predictionsBetsResultWin", "issue_type": "length_overflow", "severity": "medium", "source": "Победа", "target": "Жеңіс режимін қосу және жалғастыру", "evidence": "34 символов против 6 в исходнике (×5.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": "Ұтыс", "confidence": 0.55, "reviewed_by_human": false, "id": "6d200af3f93fba7df3ed452e00c4cd420e6d289f541ad2e4b50bc7f065788c8f"}, {"key": "predictionsBetsCoefficient", "issue_type": "length_overflow", "severity": "medium", "source": "Кэф", "target": "Коэффициент", "evidence": "11 символов против 3 в исходнике (×3.7; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "4d99d60e7da4f54cb25e6b1acb13f89ff7c5c3d2fb0f02a622f63e97cdccef3d"}, {"key": "footballTutorDesc31", "issue_type": "same_as_source", "severity": "high", "source": "Для участия в матчах нужно топливо.", "target": "Для участия в матчах нужно топливо.", "evidence": "Строка из 6 слов идентична русской; русские признаки: Для, в", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "8ed231e622e01fd13b0d4107114cf0c5a4cebd2c61b9704637f3b5d6f0178be1"}, {"key": "footballHudTitle", "issue_type": "same_as_source", "severity": "high", "source": "КАР-РЕГБИ", "target": "КАР-РЕГБИ", "evidence": "Строка из 2 слов идентична русской", "suggestion": "Авто-регби", "confidence": 0.85, "reviewed_by_human": false, "id": "9d12050c9fab7f04502b803d25c2da0615e67682ace80f5a0c16b19f85834406"}, {"key": "bubbleBannerDescription", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Собери постеры, выполни все задания и получи комплект наград: скины Полимать, Ноклип и Вишневский.", "target": "Постерлерді жинап, барлық тапсырмаларды орындаңыз және сыйлықтар жиынтығын алыңыз: Полимат, Ноклип және Вишневский скиндері.", "evidence": "слова с русскими окончаниями: Вишневский", "suggestion": null, "confidence": 0.6, "reviewed_by_human": false, "id": "a826c9764c1c4b1b9256fa161e1e210591e823e1a6cadcea2b11cd59997a4491"}, {"key": "bingoHeistTabRewards", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награды", "target": "Сыйақылар", "evidence": "«Награды» в 6 из 10 ключей переведено как «жүлделер», здесь — «Сыйақылар». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "6a966a0057f7f0ddfe7db995d75fc19e8e9b7d04c11d2925749a0708c908734d"}, {"key": "bingoHeistConfirmPurchasePrefix", "issue_type": "inconsistent_term", "severity": "medium", "source": "Вы действительно хотите купить", "target": "Сатып алғыңыз келетіні рас па", "evidence": "«Вы действительно хотите купить» в 7 из 12 ключей переведено как «Сіз шынымен сатып алғыңыз келе ме?», здесь — «Сатып алғыңыз келетіні рас па». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "a011ba29f32842ba9d799ce1b454711d1dabedf15a7fad7574b87fb4216065c0"}, {"key": "bingoHeistReward", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награда", "target": "Сыйақы", "evidence": "«Награда» в 3 из 5 ключей переведено как «жүлде», здесь — «Сыйақы». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "20864715de66e02c43670d5cc41de4b411355fdd0155e21618fae53f587b7765"}, {"key": "bingoHeistRewardReceived", "issue_type": "inconsistent_term", "severity": "medium", "source": "Награда получена!", "target": "Сыйақы алынды!", "evidence": "«Награда получена!» в 4 из 6 ключей переведено как «Сыйлық алынды», здесь — «Сыйақы алынды!». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "fddef5436012a0986cd2b3aecadc225e9fa0ff4faf36670a5fa598b36fa08d7d"}, {"key": "bingoHeistClaimReward", "issue_type": "inconsistent_term", "severity": "medium", "source": "Забрать награду", "target": "Сыйақыны алу", "evidence": "«Забрать награду» в 4 из 8 ключей переведено как «Сыйлықты алу», здесь — «Сыйақыны алу». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "8e5ee52b908b9503662a58a72cfa6ee33a1a981e51218135528fb8c1442deb27"}, {"key": "chaosMentorName", "issue_type": "same_as_source", "severity": "high", "source": "Доктор Хаос", "target": "Доктор Хаос", "evidence": "Строка из 2 слов идентична русской", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "9acd26d44b178f86a399d4158aa676d1236df0ab6ce59c3240a174bb30f4a71e"}, {"key": "rouletteBetText", "issue_type": "suffix_harmony", "severity": "high", "source": "Вы действительно хотите сделать\nставку <g>{bet} GC<\/g> на <g>{x}X<\/g>?", "target": "Сіз шынымен <g>{x}X<\/g> мәніне\n<g>{bet}-ға GC<\/g> ставка жасағыңыз келе ме?", "evidence": "«{bet}-ға»: аффикс барыс септік «-ға» жёстко прибит к плейсхолдеру; значение подставляется в игре, гармония гласных не гарантирована; нужна обработка в коде (выбор аффикса по последней букве значения) или ручная переформулировка", "suggestion": null, "confidence": 0.9, "reviewed_by_human": false, "id": "08115e4229f07cabe05a081068f3d24982387aa593dbcf031dcf53fb0550707e"}, {"key": "slotMachineRespin", "issue_type": "length_overflow", "severity": "medium", "source": "РЕСПИН", "target": "ҚАЙТА АЙНАЛДЫРУ", "evidence": "15 символов против 6 в исходнике (×2.5; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "a51ba2e1eb4b866e4e38f46e3909952379bd14b6105998971d87cf5463b9083c"}, {"key": "sthpTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Призы каждый час", "target": "Әр сағат сайын сыйлықтар", "evidence": "24 символов против 16 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "7206c7d8f0c3eec56a3be4313b442fdcb5c5e306a5fd0c099c4ffa7ed0e8272a"}, {"key": "festivalMainPrize", "issue_type": "inconsistent_term", "severity": "medium", "source": "Главный приз", "target": "Басты сыйлық", "evidence": "«Главный приз» в 4 из 6 ключей переведено как «Бас жүлде», здесь — «Басты сыйлық». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "9c3e3aa8c9e7a84302ae625814c93a6049a6307ca85d403d14c326e98e1fe0d1"}, {"key": "festivalGameConfirmPrefix", "issue_type": "inconsistent_term", "severity": "medium", "source": "Вы действительно хотите приобрести\n", "target": "Шынымен сатып алғыңыз келе ме\n", "evidence": "«Вы действительно хотите приобрести\n» в 4 из 7 ключей переведено как «Сіз шынымен сатып алғыңыз келе ме», здесь — «Шынымен сатып алғыңыз келе ме\n». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "014a5d3315f7559d823fe7102a56bef62d665d23d2f43a3b44caed0ee591643f"}, {"key": "festivalGameConfirmTargetPrefix", "issue_type": "untranslated", "severity": "high", "source": "Игру в ", "target": "", "evidence": "Перевод пустой, исходник непустой", "suggestion": null, "confidence": 0.98, "reviewed_by_human": false, "id": "2f9b40f62774311012fc330e8041d23234c38d87576fcc089111b75b21f0d238"}, {"key": "festivalGameConfirmTargetSuffix", "issue_type": "length_overflow", "severity": "high", "source": "?", "target": " ойынын?", "evidence": "8 символов против 1 в исходнике (×8.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "cc13737c29b11285a54346732839c00f3967924b8a8cac7d1e28b7c9b0ba38f8"}, {"key": "festivalPurchaseQuestion", "issue_type": "inconsistent_term", "severity": "medium", "source": "Вы действительно хотите приобрести", "target": "Шынымен сатып алғыңыз келе ме", "evidence": "«Вы действительно хотите приобрести» в 4 из 7 ключей переведено как «Сіз шынымен сатып алғыңыз келе ме», здесь — «Шынымен сатып алғыңыз келе ме». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.5, "reviewed_by_human": false, "id": "c4ba989bf30fe5f0326b4625ecccfdf51b1fb81ce00fa13cd4ca34497f950478"}, {"key": "schBuyForPrice", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Купить за {price} ", "target": "{price} үшін сатып алу ", "evidence": "послелог «үшін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "384415699047938e75b00c16e17425e73f9e8dacedbffed0cb2064c254570338"}, {"key": "schTeamNerds", "issue_type": "length_overflow", "severity": "medium", "source": "БОТАНЫ", "target": "ҮЗДІК ОҚУШЫЛАР", "evidence": "14 символов против 6 в исходнике (×2.3; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "405c321418b62a6ec511134669290de2c7403c58789263effdbf73788a144157"}, {"key": "schTabGoals", "issue_type": "length_overflow", "severity": "high", "source": "Цели", "target": "Мақсаттар", "evidence": "9 символов против 4 в исходнике (×2.2; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "89b005ea59ef6e5955d76b0aa2c92f3efb4a776b144ef46f1ee9e9e359e4ce75"}, {"key": "schAssignmentPeTeacher", "issue_type": "length_overflow", "severity": "medium", "source": "Физрук", "target": "Дене шынықтыру мұғалімі", "evidence": "23 символов против 6 в исходнике (×3.8; порог ×1.50, медиана по файлу ×0.98); короткая строка, вероятно элемент интерфейса", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "ac91b0f1b52f2bcbe248a65de51bc6f86a43f722cb1da52833e78c03d2eb27dc"}, {"key": "schStartQuizConfirm", "issue_type": "length_overflow", "severity": "high", "source": "Да, пройти ДЗ", "target": "Иә, үй тапсырмасын орындау", "evidence": "26 символов против 13 в исходнике (×2.0; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.85, "reviewed_by_human": false, "id": "fce2ee443e56063424b59f2765b514e9a304580a82005888e7178a4d0bfc8956"}, {"key": "schSubjectMath", "issue_type": "same_as_source", "severity": "medium", "source": "Математика", "target": "Математика", "evidence": "Слово «Математика» идентично русскому и не встречается в других строках перевода", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "9e3fedda4c693a3d1da1a8f062f9f5785ad48ff05cf65c1bc2a3daf6c5518a8b"}, {"key": "schSubjectInformatics", "issue_type": "same_as_source", "severity": "medium", "source": "Информатика", "target": "Информатика", "evidence": "Слово «Информатика» идентично русскому и не встречается в других строках перевода", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "f0aba43c87ef1d534df66b4b5d3ad7a9350012d1ede7de013ca9f1ed8a2e1872"}, {"key": "schSubjectPhysics", "issue_type": "same_as_source", "severity": "medium", "source": "Физика", "target": "Физика", "evidence": "Слово «Физика» идентично русскому и не встречается в других строках перевода", "suggestion": null, "confidence": 0.55, "reviewed_by_human": false, "id": "0b3300df2056d0c2d2a35fec8e64e92e70e8a7e061914e91739188b7d49366c0"}, {"key": "schSubjectEmpty", "issue_type": "inconsistent_term", "severity": "medium", "source": "Пусто?", "target": "Бос па?", "evidence": "«Пусто?» в 3 из 4 ключей переведено как «БОС», здесь — «Бос па?». Частотность не подтверждает правильность; проверить оба варианта и контекст", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "faf2a7a1f6887a6cafc727643af64a6c5124263fc7960027df5422678125d5fa"}, {"key": "schBankBreakTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Копилка", "target": "Жинақ сандығы", "evidence": "13 символов против 7 в исходнике (×1.9; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": "Қойма", "confidence": 0.79, "reviewed_by_human": false, "id": "c0592d7a0511a422de275e7d94c216f9daa7500d4ba821633d9388356d8ab36f"}, {"key": "schPackConfirmNerdKit", "issue_type": "length_overflow", "severity": "medium", "source": "Набор ботана", "target": "Үздік оқушы жинағы", "evidence": "18 символов против 12 в исходнике (×1.5; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.65, "reviewed_by_human": false, "id": "fb445d466d34a0e5e4ca117c8f448afde972c60c169beac798f5727591923447"}, {"key": "schGiftPassPriceButton", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Подарить за {price} ", "target": "{price} үшін сыйлау ", "evidence": "послелог «үшін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "6f8561471bd6f4079c9e2f71c8444b7f37d7537d06d5d3a245652766582f92d3"}, {"key": "schQuestsResetTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Обновить задания?", "target": "Тапсырмаларды жаңарту керек пе?", "evidence": "31 символов против 17 в исходнике (×1.8; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.78, "reviewed_by_human": false, "id": "cebd60bbb72fffe9b366a2b5ed60b08c3cfc452f0dc4107c684a8f1ed28e5257"}, {"key": "schQuestResetTitle", "issue_type": "length_overflow", "severity": "medium", "source": "Сбросить задание?", "target": "Тапсырманы қайта бастау керек пе?", "evidence": "33 символов против 17 в исходнике (×1.9; порог ×1.50, медиана по файлу ×0.98); имя ключа/описание указывает на кнопку, вкладку или заголовок", "suggestion": null, "confidence": 0.83, "reviewed_by_human": false, "id": "548d3534c43f7b16802895cc69072a89a12e5ea4d5a672b2d8ba0dfbba55b174"}, {"key": "schStoreCaseOpenForPrice", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Открыть за {price} ", "target": "{price} үшін ашу ", "evidence": "послелог «үшін» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "dbbf9552a0073ca333aebdf9b1874ce2116c62f2853415ed989133ef234f1f31"}, {"key": "schTutorialT8S0", "issue_type": "same_as_source", "severity": "high", "source": "Нужны законные „чит-коды“ для быстрой победы?\nРаздел <g>Бустеры<\/g> — твой личный допинг-контроль! Здесь продаются\nспециальные улучшения, которые дадут тебе преимущество над\nсоперниками.", "target": "Нужны законные „чит-коды“ для быстрой победы?\nРаздел <g>Бустеры<\/g> — твой личный допинг-контроль! Здесь продаются\nспециальные улучшения, которые дадут тебе преимущество над\nсоперниками.", "evidence": "Строка из 23 слов идентична русской; русские признаки: для, личный, продаются, улучшения", "suggestion": null, "confidence": 0.95, "reviewed_by_human": false, "id": "ef54c703ce0d2d306b41be304072fae65f67d9792e2bd6332dd0f3453e66d86b"}, {"key": "vehicleMarkerTitle2", "issue_type": "machine_translation_suspect", "severity": "medium", "source": "Экранные маркеры можно в любой момент включить\nили выключить. Метка на мини-карте продолжит\nотображаться независимо от этой настройки", "target": "Экрандағы маркерлерді кез келген уақытта қосуға немесе\nөшіруге болады. Шағын картадағы белгі бұл параметрге\nқарамастан көрсетіле береді", "evidence": "послелог «қарамастан» в начале фразы — порядок слов русского предлога («Для …», «О …»)", "suggestion": null, "confidence": 0.75, "reviewed_by_human": false, "id": "321ce2768d8d7dc77feab66b01455969d069ca4787b7ec0e001e79a0edb0b275"}], "fingerprint": "9454ca04f20beada5d8f76617dc272653f1788d22fddec54308a99bb8758f2d3"}</script>
+<script>(() => {
+  'use strict';
+  let LS_KEY;
+  let reportSignature;
+  const drafts = new Map();
+  const commentDrafts = new Map();
+  let labels = {};
+  const typeLabel = value => labels[value] || String(value || "Без типа").replaceAll("_", " ");
+  const SEV = ['high', 'medium', 'low'];
+  const $ = (id) => document.getElementById(id);
+  const state = { items: [], decisions: Object.create(null), types: new Set(), numericConf: true };
+
+  function loadDecisions() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEY));
+      if (saved?.signature !== reportSignature) return Object.create(null);
+      return Object.assign(Object.create(null), Object.fromEntries(
+        Object.entries(saved.decisions || {}).filter(([id, d]) =>
+          state.items.some(i => String(i.id) === id) && d &&
+          ['accepted', 'edited', 'false_positive', 'pending', 'code'].includes(d.status) &&
+          (d.edit === null || typeof d.edit === 'string'))));
+    } catch { return Object.create(null); }
+  }
+  function saveDecisions() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({ signature: reportSignature, decisions: state.decisions }));
+      $('saveState').textContent = 'сохранено ' + new Date().toLocaleTimeString('ru-RU');
+    } catch { $('saveState').textContent = 'не удалось сохранить в localStorage'; }
+    $('kpiReviewed').textContent = Object.keys(state.decisions).filter((id) => state.items.some((i) => String(i.id) === id)).length;
+  }
+  const sev = (i) => String(i.severity || '').toLowerCase();
+  const confNum = (i) => { const v = i.confidence; if (v == null || v === '') return null; const n = Number(v); return !Number.isFinite(n) || n < 0 || n > 100 ? null : (n > 1 ? n / 100 : n); };
+  const confLabel = (i) => { const n = confNum(i); return n === null ? String(i.confidence ?? '—') : Math.round(n * 100) + '%'; };
+
+  function renderLLM(llm) {
+    if (!llm) return;
+    const block = $('llm-status'); block.hidden = false;
+    const statuses = {ok:'завершено',partial:'частично завершено',failed:'ошибка',skipped:'нет подходящих находок'};
+    block.textContent = `Gemini ${llm.model || ''}: ${statuses[llm.status] || llm.status}. ` +
+      `Выбрано: ${llm.selected ?? 0}; отправлено: ${llm.items ?? 0}; обработано: ${llm.processed ?? 0}; ` +
+      `предложений: ${llm.suggestions_added ?? 0}; вероятных ложных: ${llm.false_positives ?? 0}; ` +
+      `отклонено: ${llm.suggestions_rejected ?? 0}; без ответа: ${llm.missing ?? 0}. Языковое качество требует проверки человеком.`;
+  }
+  // ---------- загрузка ----------
+  async function init() {
+    try {
+      const data = JSON.parse(document.getElementById('report-data').textContent);
+      labels = data.labels || {};
+      renderLLM(data.summary?.llm);
+      const rows = Array.isArray(data) ? data : (data?.findings ?? data?.items ?? data?.issues);
+      if (!Array.isArray(rows)) throw new Error('Ожидается массив находок или объект с findings');
+      const ids = new Set();
+      state.items = rows.map((row, index) => {
+        if (!row || typeof row !== 'object' || typeof row.key !== 'string' ||
+            typeof row.source !== 'string' || typeof row.issue_type !== 'string' ||
+            !(row.target === null || typeof row.target === 'string'))
+          throw new Error('Некорректная находка ' + (index + 1));
+        const id = row.id == null ? 'row-' + index : String(row.id);
+        if (ids.has(id)) throw new Error('Повторяющийся id: ' + id);
+        ids.add(id);
+        return { ...row, id };
+      });
+      reportSignature = JSON.stringify(state.items);
+      LS_KEY = 'locqa.decisions.v2.' + data.fingerprint;
+      state.decisions = loadDecisions();
+    } catch (e) {
+      $('status').textContent = 'Не удалось загрузить report.json (' + e.message + '). Попробуйте заново создать HTML-отчёт.';
+      return;
+    }
+    state.numericConf = state.items.every((i) => confNum(i) !== null);
+    renderStats();
+    renderChips();
+    renderConfidenceOptions();
+    bind();
+    render();
+    $('kpiReviewed').textContent = Object.keys(state.decisions).length;
+    $('exportBtn').disabled = false;
+    $('importBtn').disabled = false;
+  }
+
+  // ---------- статистика ----------
+  function renderStats() {
+    const total = state.items.length;
+    const count = s => state.items.filter(i => sev(i) === s).length;
+    $('kpiTotal').textContent = total;
+    $('kpiHigh').textContent = count('high');
+    $('kpiMedium').textContent = count('medium');
+    $('kpiLow').textContent = count('low');
+    const high = total ? count('high') / total * 100 : 0;
+    const medium = total ? count('medium') / total * 100 : 0;
+
+    $('distBar').innerHTML = SEV.map(s =>
+      `<span class="bg-${s}" style="width:${total ? count(s) / total * 100 : 0}%"></span>`
+    ).join('');
+    $('distBar').style.background = 'var(--panel-2)';
+    $('distPie').style.background = total
+      ? `conic-gradient(var(--high) 0% ${high}%, var(--medium) ${high}% ${high + medium}%, var(--low) ${high + medium}% 100%)`
+      : 'var(--panel-2)';
+    $('distBar').setAttribute('aria-label',
+      `High: ${count('high')}, Medium: ${count('medium')}, Low: ${count('low')}`);
+    $('distLegend').innerHTML = SEV.map(s =>
+      `<span><i class="dot bg-${s}"></i>${s} ${total ? Math.round(count(s) / total * 100) : 0}%</span>`
+    ).join('');
+  }
+
+  function renderChips() {
+    const counts = Object.create(null);
+    state.items.forEach((i) => { const t = i.issue_type || '—'; counts[t] = (counts[t] || 0) + 1; });
+    $('typeChips').innerHTML = '';
+    Object.entries(counts).sort((a, b) => b[1] - a[1]).forEach(([t, n]) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.dataset.type = t; b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = `${esc(typeLabel(t))}<b>${n}</b>`;
+      b.addEventListener('click', () => {
+        state.types.has(t) ? state.types.delete(t) : state.types.add(t);
+        b.setAttribute('aria-pressed', state.types.has(t));
+        render();
+      });
+      $('typeChips').appendChild(b);
+    });
+  }
+
+  function renderConfidenceOptions() {
+    const sel = $('confidenceFilter');
+    const opts = state.numericConf
+      ? [['ge90', '≥ 90%'], ['ge70', '≥ 70%'], ['lt70', '< 70%']]
+      : [...new Set(state.items.map((i) => String(i.confidence ?? '—')))].map((v) => [v, v]);
+    opts.forEach(([v, l]) => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v)}">${esc(l)}</option>`));
+  }
+
+  // ---------- фильтрация ----------
+  function matches(i) {
+    if (state.types.size && !state.types.has(i.issue_type || '—')) return false;
+    const s = $('severityFilter').value;
+    if (s && sev(i) !== s) return false;
+    const c = $('confidenceFilter').value;
+    if (c) {
+      if (state.numericConf) {
+        const n = confNum(i);
+        if (c === 'ge90' && !(n >= 0.9)) return false;
+        if (c === 'ge70' && !(n >= 0.7)) return false;
+        if (c === 'lt70' && !(n < 0.7)) return false;
+      } else if (String(i.confidence ?? '—') !== c) return false;
+    }
+    const q = $('search').value.trim().toLowerCase();
+    if (q) {
+      const hay = [i.key, i.source, i.target, i.evidence, i.suggestion, i.issue_type, typeLabel(i.issue_type)].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  }
+
+  // ---------- карточки ----------
+  function render() {
+    const list = state.items.filter(matches);
+    $('resultCount').textContent = `Показано ${list.length} из ${state.items.length}`;
+    $('status').textContent = list.length ? '' : (state.items.length ? 'Ничего не найдено. Сбросьте фильтры.' : 'В отчёте нет находок.');
+    $('cards').innerHTML = list.map(cardHTML).join('');
+  }
+
+  function cardHTML(i) {
+    const id = String(i.id);
+    const d = state.decisions[id];
+    const s = sev(i);
+    const review = $('reviewMode').checked;
+    const verdict = d ? `<span class="verdict ${d.status}">${{ accepted: 'принято', edited: 'правка сохранена', false_positive: 'ложное срабатывание', pending: 'на рассмотрении', code: 'нужна обработка в коде' }[d.status]}</span>` : '';
+    return `
+<article class="card sev-${esc(s)} ${d ? d.status : ''}" data-id="${esc(id)}">
+  <div class="card-head">
+    <span class="key">${esc(i.key)}</span>
+    <span class="badge ${esc(s)}">${esc(s || '—')}</span>
+    <span class="tag">${esc(typeLabel(i.issue_type))}</span>
+    ${verdict}
+    <span class="conf" title="Уверенность">conf ${esc(confLabel(i))}</span>
+  </div>
+  <div class="grid">
+    <div class="cell src"><h3>Исходник</h3><p>${esc(i.source)}</p></div>
+    <div class="cell tgt"><h3>Перевод</h3><p>${esc(i.target)}</p></div>
+    <div class="cell"><h3>Почему</h3><p>${esc(i.evidence)}</p></div>
+    <div class="cell sug"><h3>Предложение</h3><p>${esc(i.suggestion)}</p></div>
+  </div>
+  <div class="review" ${review ? '' : 'hidden'}>
+    <textarea aria-label="Правка для ${esc(i.key)}">${esc(drafts.get(id) ?? (d && d.edit != null ? d.edit : i.suggestion ?? i.target ?? ''))}</textarea>
+    <label>Комментарий
+      <textarea class="review-comment" aria-label="Комментарий для ${esc(i.key)}">${esc(commentDrafts.get(id) ?? d?.comment ?? '')}</textarea>
+    </label>
+    ${d?.reviewer ? `<p class="muted">Проверяющий: ${esc(d.reviewer)}</p>` : ''}
+    <div class="actions">
+      <button class="btn btn-ok" type="button" data-act="accept" ${typeof i.suggestion === 'string' && i.suggestion.length ? '' : 'disabled'}>Принять</button>
+      <button class="btn btn-primary" type="button" data-act="edit">Сохранить правку</button>
+      <button class="btn btn-warn" type="button" data-act="fp">Ложное срабатывание</button>
+      <button class="btn" type="button" data-act="pending">На рассмотрении</button>
+      <button class="btn" type="button" data-act="code" ${i.issue_type === "suffix_harmony" ? "" : "disabled"}>Нужна обработка в коде</button>
+      <button class="btn" type="button" data-act="reset">Сбросить</button>
+    </div>
+  </div>
+</article>`;
+  }
+
+  function onCardClick(e) {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const card = btn.closest('.card');
+    const id = card.dataset.id;
+    const item = state.items.find((i) => String(i.id) === id);
+    const text = card.querySelector('textarea').value;
+    const now = new Date().toISOString();
+    const act = btn.dataset.act;
+    if (act !== 'reset' && !$('reviewer').value.trim()) { $('status').textContent = 'Введите имя проверяющего.'; $('reviewer').focus(); return; }
+    if (act === 'code' && item.issue_type !== 'suffix_harmony') return;
+    if (act === 'accept' && !(typeof item.suggestion === 'string' && item.suggestion.length)) return;
+    if ((act === 'edit' && !text.trim())) { $('status').textContent = 'Введите непустой текст правки.'; return; }
+    if (act === 'accept' || act === 'edit') {
+      const error = validateMessage(item.source, act === 'accept' ? item.suggestion : text);
+      if (error) { $('status').textContent = error; return; }
+    }
+    if (act === 'accept') state.decisions[id] = { id: item.id, key: item.key, status: 'accepted', edit: item.suggestion ?? '', updated_at: now };
+    if (act === 'edit') state.decisions[id] = { id: item.id, key: item.key, status: 'edited', edit: text, updated_at: now };
+    if (act === 'fp') state.decisions[id] = { id: item.id, key: item.key, status: 'false_positive', edit: null, updated_at: now };
+    if (act === 'pending' || act === 'code') state.decisions[id] = {id:item.id, key:item.key, status:act, edit:null, updated_at:now};
+    if (act === 'reset') delete state.decisions[id];
+    if (state.decisions[id]) {
+      state.decisions[id].comment = card.querySelector('.review-comment').value;
+      state.decisions[id].reviewer = $('reviewer').value.trim();
+    }
+    commentDrafts.delete(id);
+    drafts.delete(id);
+    saveDecisions();
+    render();
+  }
+
+  // ---------- экспорт ----------
+  function exportDecisions() {
+    const blob = new Blob([JSON.stringify(state.items.filter(i => state.decisions[i.id]).map(i => {
+      const d = state.decisions[i.id];
+      return { id: i.id, key: i.key, issue_type: i.issue_type,
+        decision: { accepted: 'accept', edited: 'edit', false_positive: 'reject', pending: 'pending', code: 'code' }[d.status],
+        final_text: ['false_positive','pending','code'].includes(d.status) ? null : d.edit,
+        original_source: i.source, original_target: i.target,
+        reviewer: d.reviewer ?? ($('reviewer').value.trim() || null), comment: d.comment ?? '', updated_at: d.updated_at };
+    }), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'decisions.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  function resetFilters() {
+    state.types.clear();
+    document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    $('search').value = ''; $('severityFilter').value = ''; $('confidenceFilter').value = '';
+    render();
+  }
+
+  function bind() {
+    $('search').addEventListener('input', render);
+    $('severityFilter').addEventListener('change', render);
+    $('confidenceFilter').addEventListener('change', render);
+    $('reviewMode').addEventListener('change', () =>
+      document.querySelectorAll('.review').forEach((r) => (r.hidden = !$('reviewMode').checked)));
+    $('resetFilters').addEventListener('click', resetFilters);
+    $('exportBtn').addEventListener('click', exportDecisions);
+    $('importBtn').addEventListener('click', () => $('importFile').click());
+    $('importFile').addEventListener('change', async e => {
+      const file = e.target.files[0]; if (!file) return;
+      try {
+        if (file.size > 10 * 1024 * 1024) throw Error('Файл больше 10 МБ');
+        const result = prepareImport(JSON.parse(await file.text()), state.items, state.decisions);
+        if (drafts.size || commentDrafts.size) throw Error('Сначала сохраните или сбросьте несохранённые правки и комментарии');
+        Object.assign(state.decisions, result.decisions);
+        saveDecisions(); render();
+        $('status').textContent = `Загружено: ${result.added}; уже были: ${result.unchanged}.`;
+      } catch (error) { $('status').textContent = 'Импорт отменён: ' + error.message; }
+      finally { e.target.value = ''; }
+    });
+    $('cards').addEventListener('click', onCardClick);
+    $('cards').addEventListener('input', e => {
+      if (e.target.matches('textarea')) {
+        const id = e.target.closest('.card').dataset.id;
+        if (e.target.matches('.review-comment')) commentDrafts.set(id, e.target.value);
+        else drafts.set(id, e.target.value);
+      }
+    });
+  }
+
+  function esc(v) {
+    return String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+// Import is atomic: any stale, invalid or conflicting row cancels the whole file.
+function prepareImport(data, items, current) {
+  const rows = Array.isArray(data) ? data : data?.decisions;
+  if (!Array.isArray(rows)) throw Error('Ожидается массив решений');
+  const statuses = {accept:'accepted',edit:'edited',reject:'false_positive',pending:'pending',code:'code'};
+  const output = Object.create(null);
+  let added=0, unchanged=0;
+  const signature = d => JSON.stringify([d.status,d.edit,d.comment ?? '',d.reviewer ?? null]);
+  for (const [index,row] of rows.entries()) {
+    const fail = text => {throw Error(`Запись ${index+1}: ${text}`);};
+    if (!row || typeof row !== 'object' || Array.isArray(row)) fail('не объект');
+    if (typeof row.key !== 'string' || typeof row.issue_type !== 'string' || typeof row.original_source !== 'string' ||
+        !Object.hasOwn(row,'original_target') || !(row.original_target === null || typeof row.original_target === 'string')) fail('нет исходных текстов или типа');
+    if (!Object.hasOwn(statuses,row.decision)) fail('неизвестное решение');
+    if (row.comment != null && typeof row.comment !== 'string') fail('неверный комментарий');
+    if (row.reviewer != null && typeof row.reviewer !== 'string') fail('неверный проверяющий');
+    if (row.updated_at != null && typeof row.updated_at !== 'string') fail('неверная дата');
+    let item = items.find(i => i.id === row.id);
+    const matches = i => i.key===row.key && i.issue_type===row.issue_type && i.source===row.original_source && i.target===row.original_target;
+    if (item && !matches(item)) fail('ID относится к другому тексту');
+    if (!item) {
+      const candidates=items.filter(matches);
+      if (candidates.length!==1) fail('устаревшая, неизвестная или неоднозначная находка');
+      item=candidates[0];
+    }
+    const fixes=['accept','edit'].includes(row.decision);
+    if (fixes) {
+      if (typeof row.final_text !== 'string' || !row.final_text.trim()) fail('пустая правка');
+      const error=validateMessage(item.source,row.final_text);if(error)fail(error);
+    } else if (row.final_text != null) fail('решение без правки содержит текст');
+    if (row.decision==='code' && item.issue_type!=='suffix_harmony') fail('обработка в коде допустима только для suffix_harmony');
+    const d={id:item.id,key:item.key,status:statuses[row.decision],edit:fixes?row.final_text:null,
+      comment:row.comment ?? '',reviewer:row.reviewer ?? null,updated_at:row.updated_at ?? null};
+    const previous=output[item.id] || current[item.id];
+    if(previous) {
+      if(signature(previous)!==signature(d))fail('конфликт решений; существующее решение сохранено');
+      unchanged++;continue;
+    }
+    output[item.id]=d;added++;
+  }
+  return {decisions:output,added,unchanged};
+}
+
+function parseMessage(text){
+  let i=0; const names=new Set(), args=[];
+  const ws=()=>{while(/\s/.test(text[i]||'')&&i<text.length)i++;};
+  const expect=c=>{ws();if(text[i++]!==c)throw Error('Ожидалось '+c);};
+  function word(){ws();const m=/^[^\s{},#=]+/.exec(text.slice(i));if(!m)throw Error('Нет имени');i+=m[0].length;return m[0];}
+  function message(depth){
+    if(depth>50)throw Error('Слишком глубокая вложенность');
+    while(i<text.length){
+      if(text[i]==='}'){if(!depth)throw Error('Лишняя скобка');return;}
+      if(text[i]!=='{'){i++;continue;}
+      i++;const name=word();names.add(name);ws();
+      const arg={name,type:null,selectors:[],offset:null};args.push(arg);
+      if(text[i]==='}'){i++;continue;}
+      expect(',');arg.type=word();ws();
+      if(['plural','select','selectordinal'].includes(arg.type)){
+        expect(',');
+        while(i<text.length){
+          ws();if(text[i]==='}')break;
+          if(text.slice(i).startsWith('offset:')){
+            if(arg.type==='select'||arg.offset!==null||arg.selectors.length)throw Error('Неверный offset');
+            i+=7;ws();const m=/^\d+(?=\s|\})/.exec(text.slice(i));if(!m)throw Error('Неверный offset');arg.offset=Number(m[0]);i+=m[0].length;continue;
+          }
+          const m=/^[^\s{}]+/.exec(text.slice(i));if(!m)throw Error('Нет селектора');
+          const sel=m[0];i+=sel.length;
+          if(arg.selectors.includes(sel))throw Error('Повтор селектора');
+          if(arg.type!=='select'&&!/^(zero|one|two|few|many|other|=\d+)$/.test(sel))throw Error('Неверный селектор');
+          arg.selectors.push(sel);expect('{');message(depth+1);expect('}');
+        }
+        if(!arg.selectors.includes('other'))throw Error('Нет формы other');expect('}');
+      }else{
+        if(!['number','date','time'].includes(arg.type))throw Error('Неизвестный тип ICU');
+        if(text[i]===','){i++;while(i<text.length&&text[i]!=='}'){if(text[i]==='{')throw Error('Неверный формат');i++;}}
+        expect('}');
+      }
+    }
+    if(depth)throw Error('Не закрыта скобка');
+  }
+  message(0);
+  for(const name of names){if(new Set(args.filter(a=>a.name===name&&a.type).map(a=>a.type)).size>1)throw Error('Конфликт типов');}
+  return {names:[...names].sort(),args};
+}
+function validateMessage(source,target){
+  try{
+    const a=parseMessage(source),b=parseMessage(target);
+    if(JSON.stringify(a.names)!==JSON.stringify(b.names))return 'Плейсхолдеры должны совпадать';
+    for(const arg of a.args){
+      if(!arg.type)continue;
+      const required=arg.type==='select'?arg.selectors:arg.selectors.filter(s=>s.startsWith('='));
+      if(!b.args.some(t=>t.name===arg.name&&t.type===arg.type&&t.offset===arg.offset&&required.every(s=>t.selectors.includes(s))))return 'Изменён тип ICU, селекторы или offset: '+arg.name;
+    }
+    return null;
+  }catch(e){return 'Не удалось сохранить: '+e.message;}
+}
+
+function save() { saveDecisions(); }
+
+  init();
+})();
+</script>
+</body>
+</html>

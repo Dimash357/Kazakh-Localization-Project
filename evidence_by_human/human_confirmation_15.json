@@ -1,0 +1,172 @@
+[
+  {
+    "key": "bingo_title",
+    "before": "Bingo жүйесі",
+    "after": "Бинго жүйесі",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "bingo_description",
+    "before": "Бұл акцияда көптеген ерекше сыйлықтар бар. Сыйлық алу үшін арнайы ұяшықтарды ашуыңыз керек.",
+    "after": "Бұл акцияда көптеген ерекше сыйлықтар бар. Сыйлық алу үшін арнайы ұяшықтарды ашуыңыз керек.",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "jungleTreasuresYouRecieved",
+    "before": "Сіз алдыңыз",
+    "after": "Сіз алдыңыз",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "edu_hud_armor",
+    "before": "Бронежилет күйі",
+    "after": "Бронежилет күйі",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "halloweenPromo3",
+    "before": "Қажеттінің бәрін дәл қазір ал",
+    "after": "Қажеттінің бәрін дәл қазір ал",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "arena_platform_colorname",
+    "before": "{platformColor} платформаға тұрыңыз",
+    "after": "{platformColor} платформаға тұрыңыз",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "bigCatchAllPrizes",
+    "before": "Барлық сыйақылар",
+    "after": "Барлық сыйақылар",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "dragRacingV2BuyDesc1",
+    "before": "{blueprintTitle} үшін сызбалар",
+    "after": "{blueprintTitle} үшін сызбалар",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "predictionsBuyCoinsMinError",
+    "before": "{min}-нан аз сатып алуға болмайды",
+    "after": "{min}-нан аз сатып алуға болмайды",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "rustoreOfferBuyFor",
+    "before": "{price} бағасына сатып алу",
+    "after": "{price} бағасына сатып алу",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "chaosUpgradeText",
+    "before": "Сіз өз көлігіңіздің {upgradeTitle}\nкөрсеткішін {upgradeLevel} деңгейге дейін жақсарттыңыз!",
+    "after": "Сіз өз көлігіңіздің {upgradeTitle}\nкөрсеткішін {upgradeLevel} деңгейге дейін жақсарттыңыз!",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "schDuelsPointsAmount",
+    "before": "{points} ҰПАЙ",
+    "after": "{points} ҰПАЙ",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "schGiftPassConfirmQuestion",
+    "before": "Сіз шынымен {name} сыйлағыңыз келе ме",
+    "after": "Сіз шынымен {name} сыйлағыңыз келе ме",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "schPassRewardLevelRequired",
+    "before": "Пасстың {level}\nдеңгейі қажет",
+    "after": "Пасстың {level}\nдеңгейі қажет",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "schTutorialT2S1",
+    "before": "Жолақты бақыла: {playerTeamText}.\nҰпайлар фракцияның барлық мүшелерінің әрекеттерінен жиналады.\nДуэльдердің ережелері мен қатысу шарттарын білу үшін\n<g>Шайқас ақпараты</g> түймесін бас!",
+    "after": "Жолақты бақыла: {playerTeamText}.\nҰпайлар фракцияның барлық мүшелерінің әрекеттерінен жиналады.\nДуэльдердің ережелері мен қатысу шарттарын білу үшін\n<g>Шайқас ақпараты</g> түймесін бас!",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; имя в этом подтверждении не указано",
+    "confirmation_source": "Пользователь прислал исправленную таблицу 15 строк и уточнил: применять столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "predictionsBuyCoinsMinError",
+    "before": "{min}-нан аз сатып алуға болмайды",
+    "after": "Кемінде {min} сатып алу керек",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; уточнение передано пользователем",
+    "confirmation_source": "Исправленная таблица пользователя: «оказывается так», столбец «Текущий перевод».",
+    "date": "2026-10-31"
+  },
+  {
+    "key": "halloweenPromo3",
+    "before": "Қажеттінің бәрін дәл қазір ал",
+    "after": "Керегінің бәрін дәл қазір сатып ал",
+    "reviewed_by_human": true,
+    "reviewed_by_native": true,
+    "reviewer": "Носитель; уточнение передано пользователем",
+    "confirmation_source": "Последняя таблица пользователя, столбец «Текущий перевод»: halloweenPromo3.",
+    "date": "2026-10-31"
+  }
+]

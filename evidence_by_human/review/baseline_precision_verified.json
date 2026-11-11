@@ -1,0 +1,72 @@
+{
+  "answer_available": false,
+  "recall_typed": null,
+  "recall_key": null,
+  "per_type": {},
+  "missed": [],
+  "findings_total": 100,
+  "precision_vs_answer_lower_bound": null,
+  "findings_outside_answer": 100,
+  "review_ambiguous": 0,
+  "review_stale": 0,
+  "review_unmatched": 0,
+  "review_pending": 0,
+  "review_duplicates": 0,
+  "review_conflicts": 0,
+  "review_decisions_total": 100,
+  "review_coverage": 1.0,
+  "review_by_type": {
+    "glossary_violation": {
+      "reviewed": 15,
+      "confirmed": 5,
+      "precision": 0.333
+    },
+    "inconsistent_term": {
+      "reviewed": 41,
+      "confirmed": 21,
+      "precision": 0.512
+    },
+    "length_overflow": {
+      "reviewed": 12,
+      "confirmed": 11,
+      "precision": 0.917
+    },
+    "machine_translation_suspect": {
+      "reviewed": 2,
+      "confirmed": 2,
+      "precision": 1.0
+    },
+    "orthography": {
+      "reviewed": 2,
+      "confirmed": 2,
+      "precision": 1.0
+    },
+    "placeholder_mismatch": {
+      "reviewed": 3,
+      "confirmed": 3,
+      "precision": 1.0
+    },
+    "same_as_source": {
+      "reviewed": 19,
+      "confirmed": 7,
+      "precision": 0.368
+    },
+    "suffix_harmony": {
+      "reviewed": 3,
+      "confirmed": 3,
+      "precision": 1.0
+    },
+    "untranslated": {
+      "reviewed": 2,
+      "confirmed": 2,
+      "precision": 1.0
+    },
+    "wrong_language": {
+      "reviewed": 1,
+      "confirmed": 1,
+      "precision": 1.0
+    }
+  },
+  "precision_reviewed": 0.57,
+  "reviewed": 100
+}

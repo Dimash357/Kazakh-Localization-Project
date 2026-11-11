@@ -1,0 +1,12 @@
+env/
+.venv/
+build/
+out/
+verification/
+__pycache__/
+*.pyc
+*.egg-info/
+.idea/
+.vscode/
+.env
+*.key

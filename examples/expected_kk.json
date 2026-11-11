@@ -1,0 +1,102 @@
+[
+  {
+    "key": "settings_graphics_quality",
+    "issue_type": "untranslated"
+  },
+  {
+    "key": "phone_contacts_tab",
+    "issue_type": "untranslated"
+  },
+  {
+    "key": "server_full",
+    "issue_type": "same_as_source"
+  },
+  {
+    "key": "support_title",
+    "issue_type": "same_as_source"
+  },
+  {
+    "key": "bank_deposit_button",
+    "issue_type": "same_as_source"
+  },
+  {
+    "key": "money_received",
+    "issue_type": "placeholder_mismatch"
+  },
+  {
+    "key": "police_wanted",
+    "issue_type": "placeholder_mismatch"
+  },
+  {
+    "key": "items_count",
+    "issue_type": "plural_mismatch"
+  },
+  {
+    "key": "family_tab",
+    "issue_type": "glossary_violation"
+  },
+  {
+    "key": "coins_buy_button",
+    "issue_type": "glossary_violation"
+  },
+  {
+    "key": "garage_rent_button",
+    "issue_type": "length_overflow"
+  },
+  {
+    "key": "car_repair_button",
+    "issue_type": "length_overflow"
+  },
+  {
+    "key": "quest_reward",
+    "issue_type": "machine_translation_suspect"
+  },
+  {
+    "key": "tutorial_step_phone",
+    "issue_type": "machine_translation_suspect"
+  },
+  {
+    "key": "support_ticket_sent",
+    "issue_type": "machine_translation_suspect"
+  },
+  {
+    "key": "shop_close_button",
+    "issue_type": "inconsistent_term"
+  },
+  {
+    "key": "money_sent",
+    "issue_type": "suffix_harmony"
+  },
+  {
+    "key": "admin_jail",
+    "issue_type": "suffix_harmony"
+  },
+  {
+    "key": "auth_wrong_password",
+    "issue_type": "orthography"
+  },
+  {
+    "key": "not_enough_money",
+    "issue_type": "orthography"
+  },
+  {
+    "key": "lottery_win",
+    "issue_type": "orthography"
+  },
+  {
+    "key": "job_quit_confirm",
+    "issue_type": "wrong_language"
+  },
+  {
+    "key": "daily_reward_title",
+    "issue_type": "wrong_language"
+  },
+  {
+    "key": "event_starts",
+    "issue_type": "wrong_language"
+  },
+  {
+    "key": "chat_placeholder",
+    "issue_type": "wrong_language"
+  }
+]

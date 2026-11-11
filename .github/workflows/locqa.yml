@@ -1,0 +1,57 @@
+# Runs locqa on every pull request that touches ARB files.
+# In the game repository replace `pip install .` with `pip install git+<url of this repo>`
+# and set L10N_DIR to the directory with intl_*.arb.
+name: locqa
+
+on:
+  pull_request:
+    paths:
+      - "**/*.arb"
+  workflow_dispatch:
+
+env:
+  L10N_DIR: examples
+  SOURCE: intl_ru.arb
+  FAIL_ON: never         # examples contain intentional errors; use high in a game repository
+  FAIL_CONFIDENCE: "0.8" # ignore uncertain findings when deciding pass/fail
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+      - name: Check changed ARB files
+        run: |
+          set -euo pipefail
+          mkdir -p locqa-report
+          changed=$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD -- "$L10N_DIR/*.arb" | grep -v "/$SOURCE$" || true)
+          [ -z "$changed" ] && changed=$(ls "$L10N_DIR"/intl_*.arb | grep -v "/$SOURCE$")
+          status=0
+          for f in $changed; do
+            [ -f "$f" ] || continue
+            name=$(basename "$f" .arb)
+            refs=$(ls "$L10N_DIR"/intl_*.arb | grep -v -e "/$SOURCE$" -e "$f" | tr '\n' ' ')
+            locqa check --source "$L10N_DIR/$SOURCE" --target "$f" --glossary glossary.csv --ref $refs \
+              --out "locqa-report/$name.json" --fail-on "$FAIL_ON" --fail-confidence "$FAIL_CONFIDENCE" \
+              2> "locqa-report/$name.txt" || status=1
+            if [ "$L10N_DIR" = "examples" ]; then
+              echo "Synthetic fixtures contain deliberate invalid ICU; validation is exercised by unit tests." >> "locqa-report/$name.txt"
+            else
+              locqa validate "$f" --template "$L10N_DIR/$SOURCE" >> "locqa-report/$name.txt" 2>&1 || status=1
+            fi
+            { echo "### $f"; echo '```'; cat "locqa-report/$name.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          done
+          exit $status
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: locqa-report
+          path: locqa-report/
